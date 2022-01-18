@@ -44,10 +44,8 @@ RUN yum check-update -y ; \
     yum groupremove -y "Development Tools" && \
     rm -rf /tmp/libfaketime && rm -f /tmp/noVNC.tar.gz && \
     yum clean all && rm -rf /var/cache/yum/*
-RUN wget --no-check-certificate http://crossover.codeweavers.com/redirect/crossover.bin -O /tmp/install-crossover.bin &&\
-    chmod +x /tmp/install-crossover.bin &&\
-    /tmp/install-crossover.bin --i-agree-to-all-licenses --destination ${INSTALLDIR} --noreadme --noprompt --nooptions
-
+RUN wget --no-check-certificate  -q http://crossover.codeweavers.com/redirect/crossover.bin -O /tmp/install-crossover.bin && \
+    chmod +x /tmp/install-crossover.bin
 RUN touch ${HOME}/.vnc/passwd ${HOME}/.Xauthority
 
 RUN chown -R ${UID}:${GID} ${HOME} && \
@@ -74,7 +72,7 @@ RUN cp ${HOME}/.vnc/xstartup ${HOME}/.vnc/xstartup_after
 RUN /bin/echo -e "${INSTALLDIR}/bin/crossover" >> ${HOME}/.vnc/xstartup_after
 
 # install crossover
-RUN /bin/echo -e "wget --no-check-certificate http://crossover.codeweavers.com/redirect/crossover.bin -O /tmp/install-crossover.bin && chmod +x /tmp/install-crossover.bin && /tmp/install-crossover.bin --i-agree-to-all-licenses --destination ${INSTALLDIR} --noreadme --noprompt --nooptions" >> ${HOME}/.vnc/xstartup
+RUN /bin/echo -e "chmod +x /tmp/install-crossover.bin && /tmp/install-crossover.bin --i-agree-to-all-licenses --destination ${INSTALLDIR} --noreadme --noprompt --nooptions" >> ${HOME}/.vnc/xstartup
 RUN /bin/echo -e "zenity --info --text=\"Crossover Software install complete.\"" >> ${HOME}/.vnc/xstartup
 RUN /bin/echo -e "rm -f /tmp/install-crossover.bin" >> ${HOME}/.vnc/xstartup
 RUN /bin/echo -e "mv ${HOME}/.vnc/xstartup_after ${HOME}/.vnc/xstartup" >> ${HOME}/.vnc/xstartup
