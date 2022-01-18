@@ -46,6 +46,7 @@ RUN yum check-update -y ; \
     yum clean all && rm -rf /var/cache/yum/*
 RUN wget --no-check-certificate  -q http://crossover.codeweavers.com/redirect/crossover.bin -O /tmp/install-crossover.bin && \
     chmod +x /tmp/install-crossover.bin
+
 RUN touch ${HOME}/.vnc/passwd ${HOME}/.Xauthority
 
 RUN chown -R ${UID}:${GID} ${HOME} && \
