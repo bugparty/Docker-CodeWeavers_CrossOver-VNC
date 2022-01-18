@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - dev
+      - dev2
 
 env:
   # Use docker.io for Docker Hub if empty

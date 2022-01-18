@@ -44,8 +44,9 @@ RUN yum check-update -y ; \
     yum groupremove -y "Development Tools" && \
     rm -rf /tmp/libfaketime && rm -f /tmp/noVNC.tar.gz && \
     yum clean all && rm -rf /var/cache/yum/*
-
-RUN /bin/echo "@`date \"+%F %T\"`" > /etc/faketimerc
+RUN wget --no-check-certificate http://crossover.codeweavers.com/redirect/crossover.bin -O /tmp/install-crossover.bin &&\
+    chmod +x /tmp/install-crossover.bin &&\
+    /tmp/install-crossover.bin --i-agree-to-all-licenses --destination ${INSTALLDIR} --noreadme --noprompt --nooptions
 
 RUN touch ${HOME}/.vnc/passwd ${HOME}/.Xauthority
 
